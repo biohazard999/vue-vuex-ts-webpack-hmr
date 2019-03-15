@@ -42,7 +42,7 @@ appEntryFiles["vendor"] = [
   path.resolve(__dirname, "VueApp/common/design/site.scss"),
 ]
 
-module.exports = function (env, argv) {
+module.exports = (env, argv) => {
 
     if (argv.mode === "production") {
         isProduction = true;

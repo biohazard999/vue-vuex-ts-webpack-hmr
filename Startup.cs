@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.SpaServices.Webpack;
 
 namespace TestProject.Web
 {
@@ -28,6 +29,10 @@ namespace TestProject.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
+                {
+                    HotModuleReplacement = true
+                });
             }
 
             app.UseStaticFiles();
@@ -39,10 +44,9 @@ namespace TestProject.Web
                     template: "{controller}/{*anything=Index}",
                     defaults: new { action = "Index" });
                 
-                routes.MapRoute(
-                   name: "app-fallback",
-                   template: "{*anything}/",
-                   defaults: new { controller = "Template", action = "Index" });
+                routes.MapSpaFallbackRoute(
+                    name: "spa-fallback",
+                    defaults: new { controller = "Template", action = "Index" });
             });
         }
     }
